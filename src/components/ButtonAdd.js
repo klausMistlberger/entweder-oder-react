@@ -3,7 +3,6 @@ import React from 'react';
 import classes from './ButtonAdd.module.css';
 
 const AddOptionButton = (props) => {
-
   return (
     <button
       title='add option'
