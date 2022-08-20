@@ -1,0 +1,14 @@
+.button-add {
+  align-self: center;
+  width: 3em;
+  height: 3em;
+  border: none;
+  border-radius: 50%;
+  font-weight: 700;
+  background-color: #ccffcc;
+  transition: background-color 160ms ease-in-out;
+}
+
+.button-add:hover {
+  background-color: #99ff99;
+}
