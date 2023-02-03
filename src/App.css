@@ -42,6 +42,7 @@ form {
 
 .output {
   margin-top: 1em;
+  margin-bottom: 1em;
   font-size: 2em;
   text-align: center;
 }
@@ -53,4 +54,9 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.best-of {
+  display: flex;
+  flex-direction: column;
 }

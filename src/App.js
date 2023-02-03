@@ -16,6 +16,9 @@ const App = () => {
 
   const [output, setOutput] = useState('>> ••• <<');
 
+  const [clickCounter, setClickCounter] = useState(0);
+  const [resultCounter, setResultCounter] = useState();
+
   const optionChangeHandler = (event) => {
     const elementToUpdate = options.find(
       (option) => option.id === event.target.id
@@ -50,7 +53,7 @@ const App = () => {
     });
   };
 
-  const calculateResult = (event) => {
+  const clickGoHandler = (event) => {
     event.preventDefault();
     const factor = 30;
     const seedLength = factor * options.length + 1;
@@ -58,16 +61,16 @@ const App = () => {
     const seed = Math.ceil(Math.random() * seedLength);
     const select = Math.floor(seed / factor);
 
+    setClickCounter((count) => count + 1);
+
     setOutput(() => {
       if (select === options.length) {
         return 'Keine Ahnung, wirf eine Münze!';
-      } else {
-        if (options[select].value !== '') {
-          return options[select].value;
-        } else {
-          return '>> ••• <<';
-        }
       }
+      if (options[select].value !== '') {
+        return options[select].value;
+      }
+      return '>> ••• <<';
     });
   };
 
@@ -84,17 +87,22 @@ const App = () => {
   ));
 
   return (
-    <div className='App'>
+    <div className="App">
       <h1>Entweder - Oder - X</h1>
-      <form className='form'>
+      <form className="form">
         {inputs}
         <AddOptionButton onClick={addOption} />
-        <button className='result-button' onClick={calculateResult}>
+        <button className="result-button" onClick={clickGoHandler}>
           GO
         </button>
       </form>
-      <div className='output'>{output}</div>
-      <a className='mbkrocks' href='https://klausmistlberger.rocks/'>
+      <div className="output">{output}</div>
+      {clickCounter >= 2 && (
+        <div className="best-of">
+          <p>Best of {clickCounter + 1 + (clickCounter % 2)}</p>
+        </div>
+      )}
+      <a className="mbkrocks" href="https://klausmistlberger.rocks/">
         klausmistlberger.rocks
       </a>
     </div>
