@@ -12,12 +12,11 @@ const App = () => {
   ];
 
   const [options, setOptions] = useState(initialState);
-  const newOption = { id: nanoid(), value: '', placeholder: '...' };
-
   const [output, setOutput] = useState('>> ••• <<');
-
   const [clickCounter, setClickCounter] = useState(0);
   const [bestOfOptions, setBestOfOptions] = useState([]);
+
+  const newOption = { id: nanoid(), value: '', placeholder: '...' };
 
   const optionChangeHandler = (event) => {
     const elementToUpdate = options.find(
@@ -113,6 +112,7 @@ const App = () => {
   ));
 
   const bestOfResults = bestOfOptions.map((el) => {
+    console.log(el);
     return (
       <p key={el.id}>
         {el.option}: {el.count}
