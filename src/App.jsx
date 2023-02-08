@@ -17,7 +17,7 @@ const App = () => {
   const [output, setOutput] = useState('>> ••• <<');
 
   const [clickCounter, setClickCounter] = useState(0);
-  const [bestOfOptions, setBestOfOptions] = useState();
+  const [bestOfOptions, setBestOfOptions] = useState([]);
 
   const optionChangeHandler = (event) => {
     const elementToUpdate = options.find(
@@ -55,7 +55,7 @@ const App = () => {
 
   const clickGoHandler = (event) => {
     event.preventDefault();
-    const factor = 2;
+    const factor = 30;
     const seedLength = options.length * factor + 1;
 
     const seed = Math.floor(Math.random() * seedLength) + 1;
@@ -64,23 +64,28 @@ const App = () => {
     setClickCounter((count) => count + 1);
 
     setBestOfOptions((prevValues) => {
-      const newValues = { ...prevValues };
+      const newValues = [...prevValues];
 
       if (select !== options.length) {
-        const selection = options[select].value;
-        if (newValues[selection] === undefined) {
-          newValues[selection] = 1;
+        const option = options[select].value;
+        const elementToUpdate = newValues.find((el) => el.option === option);
+        if (!elementToUpdate) {
+          newValues.push({ id: nanoid(), option: option, count: 1 });
           return newValues;
         }
-        newValues[selection]++;
+        const index = newValues.indexOf(elementToUpdate);
+        newValues[index].count += 1;
         return newValues;
       }
 
-      if (newValues['Keine Ahnung'] === undefined) {
-        newValues['Keine Ahnung'] = 1;
+      const noOption = 'Keine Ahnung';
+      const elementToUpdate = newValues.find((el) => el.option === noOption);
+      if (!elementToUpdate) {
+        newValues.push({ id: nanoid(), option: noOption, count: 1 });
         return newValues;
       }
-      newValues['Keine Ahnung']++;
+      const index = newValues.indexOf(elementToUpdate);
+      newValues[index].count += 1;
       return newValues;
     });
 
@@ -107,6 +112,14 @@ const App = () => {
     />
   ));
 
+  const bestOfResults = bestOfOptions.map((el) => {
+    return (
+      <p key={el.id}>
+        {el.option}: {el.count}
+      </p>
+    );
+  });
+
   return (
     <div className="App">
       <h1>Entweder - Oder - X</h1>
@@ -121,7 +134,7 @@ const App = () => {
       {clickCounter >= 2 && (
         <div className="best-of">
           <p>Best of {clickCounter + 1 + (clickCounter % 2)}</p>
-          <div className="best-of-options"></div>
+          <div className="best-of-options">{bestOfResults}</div>
         </div>
       )}
       <a className="mbkrocks" href="https://klausmistlberger.rocks/">
