@@ -17,7 +17,7 @@ const App = () => {
   const [output, setOutput] = useState('>> ••• <<');
 
   const [clickCounter, setClickCounter] = useState(0);
-  const [resultCounter, setResultCounter] = useState();
+  const [bestOfOptions, setBestOfOptions] = useState();
 
   const optionChangeHandler = (event) => {
     const elementToUpdate = options.find(
@@ -55,13 +55,34 @@ const App = () => {
 
   const clickGoHandler = (event) => {
     event.preventDefault();
-    const factor = 30;
-    const seedLength = factor * options.length + 1;
+    const factor = 2;
+    const seedLength = options.length * factor + 1;
 
-    const seed = Math.ceil(Math.random() * seedLength);
+    const seed = Math.floor(Math.random() * seedLength) + 1;
     const select = Math.floor(seed / factor);
 
     setClickCounter((count) => count + 1);
+
+    setBestOfOptions((prevValues) => {
+      const newValues = { ...prevValues };
+
+      if (select !== options.length) {
+        const selection = options[select].value;
+        if (newValues[selection] === undefined) {
+          newValues[selection] = 1;
+          return newValues;
+        }
+        newValues[selection]++;
+        return newValues;
+      }
+
+      if (newValues['Keine Ahnung'] === undefined) {
+        newValues['Keine Ahnung'] = 1;
+        return newValues;
+      }
+      newValues['Keine Ahnung']++;
+      return newValues;
+    });
 
     setOutput(() => {
       if (select === options.length) {
@@ -100,6 +121,7 @@ const App = () => {
       {clickCounter >= 2 && (
         <div className="best-of">
           <p>Best of {clickCounter + 1 + (clickCounter % 2)}</p>
+          <div className="best-of-options"></div>
         </div>
       )}
       <a className="mbkrocks" href="https://klausmistlberger.rocks/">
