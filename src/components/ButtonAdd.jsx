@@ -5,8 +5,8 @@ import classes from './ButtonAdd.module.css';
 const AddOptionButton = (props) => {
   return (
     <button
-      title='add option'
-      className={classes['button-add']}
+      title="add option"
+      className={`${classes['button-add']} shadow`}
       onClick={props.onClick}
     >
       +
