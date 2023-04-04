@@ -67,14 +67,19 @@ const App = () => {
     }
   };
 
+  const createQueryUrl = () => {
+    const queryArray = options.map(
+      (option, index) => `${index}=${option.value}`
+    );
+    const queryString = `?${queryArray.join('&')}`;
+    const url = window.location.href.split('?')[0];
+    const queryUrl = url + queryString;
+    return queryUrl;
+  };
+
   const setQueryParams = () => {
     if (options[0].value !== '' && options[1].value !== '') {
-      const queryArray = options.map(
-        (option, index) => `${index}=${option.value}`
-      );
-      const queryString = `?${queryArray.join('&')}`;
-      const url = window.location.href.split('?')[0];
-      const queryUrl = url + queryString;
+      const queryUrl = createQueryUrl();
       window.history.replaceState(null, '', queryUrl);
     }
   };
@@ -106,6 +111,20 @@ const App = () => {
     window.history.replaceState(null, '', url);
   };
 
+  const clickShareHandler = () => {
+    let shareData = {
+      title: 'Entweder - Oder - X',
+      text: 'Make a decision',
+      url: 'https://eo.klausmistlberger.rocks/',
+    };
+    if (options[0].value !== '' && options[1].value !== '') {
+      shareData.url = createQueryUrl();
+      navigator.share(shareData);
+    } else {
+      navigator.share(shareData);
+    }
+  };
+
   const inputs = options.map((option) => (
     <Input
       key={option.id}
@@ -129,9 +148,22 @@ const App = () => {
         </button>
       </form>
       <div className="output">{output}</div>
-      <button className="reset-button shadow" onClick={clickResetHandler}>
-        Reset
-      </button>
+
+      <div className="utility-button-container">
+        <button
+          className="utility-button reset-button shadow"
+          onClick={clickResetHandler}
+        >
+          Reset
+        </button>
+        <button
+          className="utility-button share-button shadow"
+          onClick={clickShareHandler}
+        >
+          Share
+        </button>
+      </div>
+
       <a className="mbkrocks" href="https://klausmistlberger.rocks/">
         klausmistlberger.rocks
       </a>

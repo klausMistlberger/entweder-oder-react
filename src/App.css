@@ -59,16 +59,32 @@ button {
   transition: background-color 160ms ease-in-out;
 }
 
-.reset-button {
+.utility-button {
   width: 5em;
   height: 4em;
   border: none;
   border-radius: 18px;
+}
+
+.reset-button {
   background-color: #eddbad;
 }
 
 .reset-button:hover {
   background-color: #ffecbc;
+}
+
+.share-button {
+  background-color: #5bd65b;
+}
+
+.share-button:hover {
+  background-color: #67fd67;
+}
+
+.utility-button-container {
+  display: flex;
+  gap: 2rem;
 }
 
 .best-of {
