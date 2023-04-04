@@ -7,7 +7,7 @@ const ButtonRemove = (props) => {
       title="remove option"
       onClick={props.onRemove}
       data-id={props.id}
-      className={classes['remove-button']}
+      className={`${classes['remove-button']} shadow`}
     >
       -
     </button>

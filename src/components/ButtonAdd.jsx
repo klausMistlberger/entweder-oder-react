@@ -6,7 +6,7 @@ const AddOptionButton = (props) => {
   return (
     <button
       title="add option"
-      className={classes['button-add']}
+      className={`${classes['button-add']} shadow`}
       onClick={props.onClick}
     >
       +

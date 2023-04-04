@@ -1,22 +1,27 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Input from './components/Input';
 import AddOptionButton from './components/ButtonAdd';
 import { nanoid } from 'nanoid';
-
 import './App.css';
 
 const App = () => {
-  const initialState = [
+  const initialOptions = [
     { id: nanoid(), value: '', placeholder: 'Entweder...' },
     { id: nanoid(), value: '', placeholder: '...Oder' },
   ];
+  const initialOutput = '>> ••• <<';
 
-  const [options, setOptions] = useState(initialState);
-  const [output, setOutput] = useState('>> ••• <<');
-  const [clickCounter, setClickCounter] = useState(0);
-  const [bestOfOptions, setBestOfOptions] = useState([]);
+  const [options, setOptions] = useState(initialOptions);
+  const [output, setOutput] = useState(initialOutput);
+
+  useEffect(() => {
+    getQueryParams();
+  }, []);
 
   const newOption = { id: nanoid(), value: '', placeholder: '...' };
+  const createOption = (option) => {
+    return { id: nanoid(), value: option, placeholder: '...' };
+  };
 
   const optionChangeHandler = (event) => {
     const elementToUpdate = options.find(
@@ -52,6 +57,28 @@ const App = () => {
     });
   };
 
+  const getQueryParams = () => {
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const params = Object.fromEntries(urlSearchParams.entries());
+    const values = Object.values(params);
+    if (values.length >= 2) {
+      const queryOptions = values.map((value) => createOption(value));
+      setOptions(queryOptions);
+    }
+  };
+
+  const setQueryParams = () => {
+    if (options[0].value !== '' && options[1].value !== '') {
+      const queryArray = options.map(
+        (option, index) => `${index}=${option.value}`
+      );
+      const queryString = `?${queryArray.join('&')}`;
+      const url = window.location.href.split('?')[0];
+      const queryUrl = url + queryString;
+      window.history.replaceState(null, '', queryUrl);
+    }
+  };
+
   const clickGoHandler = (event) => {
     event.preventDefault();
     const factor = 30;
@@ -60,34 +87,7 @@ const App = () => {
     const seed = Math.floor(Math.random() * seedLength) + 1;
     const select = Math.floor(seed / factor);
 
-    setClickCounter((count) => count + 1);
-
-    setBestOfOptions((prevValues) => {
-      const newValues = [...prevValues];
-
-      if (select !== options.length) {
-        const option = options[select].value;
-        const elementToUpdate = newValues.find((el) => el.option === option);
-        if (!elementToUpdate) {
-          newValues.push({ id: nanoid(), option: option, count: 1 });
-          return newValues;
-        }
-        const index = newValues.indexOf(elementToUpdate);
-        newValues[index].count += 1;
-        return newValues;
-      }
-
-      const noOption = 'Keine Ahnung';
-      const elementToUpdate = newValues.find((el) => el.option === noOption);
-      if (!elementToUpdate) {
-        newValues.push({ id: nanoid(), option: noOption, count: 1 });
-        return newValues;
-      }
-      const index = newValues.indexOf(elementToUpdate);
-      newValues[index].count += 1;
-      return newValues;
-    });
-
+    setQueryParams();
     setOutput(() => {
       if (select === options.length) {
         return 'Keine Ahnung, wirf eine Münze!';
@@ -97,6 +97,13 @@ const App = () => {
       }
       return '>> ••• <<';
     });
+  };
+
+  const clickResetHandler = () => {
+    setOptions(initialOptions);
+    setOutput(initialOutput);
+    const url = window.location.href.split('?')[0];
+    window.history.replaceState(null, '', url);
   };
 
   const inputs = options.map((option) => (
@@ -111,32 +118,20 @@ const App = () => {
     />
   ));
 
-  const bestOfResults = bestOfOptions.map((el) => {
-    console.log(el);
-    return (
-      <p key={el.id}>
-        {el.option}: {el.count}
-      </p>
-    );
-  });
-
   return (
     <div className="App">
       <h1>Entweder - Oder - X</h1>
       <form className="form">
         {inputs}
         <AddOptionButton onClick={addOption} />
-        <button className="result-button" onClick={clickGoHandler}>
+        <button className="result-button shadow" onClick={clickGoHandler}>
           GO
         </button>
       </form>
       <div className="output">{output}</div>
-      {clickCounter >= 2 && (
-        <div className="best-of">
-          <p>Best of {clickCounter + 1 + (clickCounter % 2)}</p>
-          <div className="best-of-options">{bestOfResults}</div>
-        </div>
-      )}
+      <button className="reset-button shadow" onClick={clickResetHandler}>
+        Reset
+      </button>
       <a className="mbkrocks" href="https://klausmistlberger.rocks/">
         klausmistlberger.rocks
       </a>

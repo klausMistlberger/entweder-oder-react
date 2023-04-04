@@ -7,8 +7,17 @@
 }
 
 .input {
+  height: 2rem;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 1.5em;
   text-align: center;
   border-radius: 15px;
+  border: none;
+  transition: box-shadow 160ms ease-in-out;
+}
+
+.input:focus {
+  outline: none;
+  border: none;
+  box-shadow: 3px 3px 4px #444;
 }

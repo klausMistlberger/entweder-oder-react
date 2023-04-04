@@ -7,7 +7,7 @@ const Input = (props) => {
     <div className={classes['input-container']}>
       <input
         type="input"
-        className={classes.input}
+        className={`${classes.input} shadow`}
         placeholder={props.placeholder}
         id={props.id}
         onChange={props.onChange}

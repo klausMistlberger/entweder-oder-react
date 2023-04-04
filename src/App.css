@@ -3,9 +3,10 @@
   flex-direction: column;
   align-items: center;
   max-width: 720px;
-  margin: 0 auto;
-  padding: 1em;
-  height: 100vh;
+  margin: auto;
+  height: 100%;
+  position: relative;
+  gap: 1em;
 }
 
 h1 {
@@ -20,8 +21,9 @@ form {
 }
 
 .mbkrocks {
-  margin-top: 2em;
   color: #aaa;
+  position: absolute;
+  bottom: 2em;
 }
 
 .result-button {
@@ -33,27 +35,40 @@ form {
   border: none;
   border-radius: 27px;
   background-color: #ffdd00;
-  transition: background-color 160ms ease-in-out;
 }
 
 .result-button:hover {
-  background-color: #eecc00;
+  background-color: #ffed00;
 }
 
 .output {
   margin-top: 1em;
   margin-bottom: 1em;
   font-size: 2em;
-  text-align: center;
+  font-weight: 700;
 }
 
 button {
+  font-family: Tahoma;
   margin: 0;
   padding: 0;
   color: black;
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: background-color 160ms ease-in-out;
+}
+
+.reset-button {
+  width: 5em;
+  height: 4em;
+  border: none;
+  border-radius: 18px;
+  background-color: #eddbad;
+}
+
+.reset-button:hover {
+  background-color: #ffecbc;
 }
 
 .best-of {
