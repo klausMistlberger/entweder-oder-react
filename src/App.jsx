@@ -114,10 +114,11 @@ const App = () => {
   const clickShareHandler = () => {
     let shareData = {
       title: 'Entweder - Oder - X',
-      text: 'Make a decision',
+      text: 'https://eo.klausmistlberger.rocks/',
       url: 'https://eo.klausmistlberger.rocks/',
     };
     if (options[0].value !== '' && options[1].value !== '') {
+      shareData.text = createQueryUrl();
       shareData.url = createQueryUrl();
       navigator.share(shareData);
     } else {
