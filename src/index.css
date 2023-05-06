@@ -1,4 +1,5 @@
 :root {
+  color-scheme: light dark;
   --transition: 160ms ease-in-out;
   --background: #000d15;
   --shadow-color: #001420;
