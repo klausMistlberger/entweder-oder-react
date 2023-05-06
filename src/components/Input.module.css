@@ -13,11 +13,14 @@
   text-align: center;
   border-radius: 15px;
   border: none;
-  transition: box-shadow 160ms ease-in-out;
+  transition: box-shadow var(--transition), background-color var(--transition);
+  color: var(--text-color);
+  background-color: var(--input-color);
 }
 
 .input:focus {
   outline: none;
   border: none;
-  box-shadow: 3px 3px 4px #444;
+  background-color: var(--input-focus-color);
+  box-shadow: 3px 3px 4px var(--input-focus-color);
 }

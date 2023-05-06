@@ -12,7 +12,21 @@
 h1 {
   margin: 1em 0;
   font-weight: 900;
+  color: var(--text-color);
+  position: relative;
 }
+
+/* h1::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 120%;
+  background-color: var(--text-color);
+  transform: perspective(1em) rotateX(45deg) scale(1, 0.3) translateZ(8px);
+  filter: blur(0.75em);
+} */
 
 form {
   display: flex;
@@ -34,11 +48,13 @@ form {
   align-self: center;
   border: none;
   border-radius: 27px;
-  background-color: #ffdd00;
+  background-color: var(--result-button-color);
+  transition: color var(--transition), background-color var(--transition);
 }
 
 .result-button:hover {
-  background-color: #ffed00;
+  color: var(--text-color-dark);
+  background-color: var(--result-button-hover-color);
 }
 
 .output {
@@ -46,17 +62,32 @@ form {
   margin-bottom: 1em;
   font-size: 2em;
   font-weight: 700;
+  color: var(--text-color);
+  position: relative;
+}
+
+.output::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 120%;
+  /* color: var(--text-color); */
+  background-color: var(--text-color);
+  transform: perspective(1em) rotateX(45deg) scale(1, 0.3) translateZ(8px);
+  filter: blur(0.75em);
 }
 
 button {
   font-family: Tahoma, Helvetica, sans-serif;
   margin: 0;
   padding: 0;
-  color: black;
+  color: var(--text-color);
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: background-color 160ms ease-in-out;
+  transition: background-color var(--transition);
 }
 
 .utility-button {
@@ -68,19 +99,19 @@ button {
 }
 
 .reset-button {
-  background-color: #eddbad;
+  background-color: var(--reset-button-color);
 }
 
 .reset-button:hover {
-  background-color: #ffecbc;
+  background-color: var(--reset-button-hover-color);
 }
 
 .share-button {
-  background-color: #5bd65b;
+  background-color: var(--share-button-color);
 }
 
 .share-button:hover {
-  background-color: #67fd67;
+  background-color: var(--share-button-hover-color);
 }
 
 .utility-button-container {

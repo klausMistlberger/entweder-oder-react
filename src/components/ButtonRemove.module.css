@@ -2,12 +2,12 @@
   width: 2em;
   height: 2em;
   font-weight: 700;
-  background-color: #ff8080;
+  background-color: var(--remove-button-color);
   border: none;
   border-radius: 50%;
-  transition: background-color 160ms ease-in-out;
+  transition: background-color var(--transition);
 }
 
 .remove-button:hover {
-  background-color: #ff0000;
+  background-color: var(--remove-button-hover-color);
 }

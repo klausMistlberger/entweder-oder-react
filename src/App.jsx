@@ -164,10 +164,6 @@ const App = () => {
           Share
         </button>
       </div>
-
-      <a className="mbkrocks" href="https://klausmistlberger.rocks/">
-        klausmistlberger.rocks
-      </a>
     </div>
   );
 };

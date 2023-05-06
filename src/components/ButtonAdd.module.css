@@ -5,10 +5,10 @@
   border: none;
   border-radius: 50%;
   font-weight: 700;
-  background-color: #ccffcc;
-  transition: background-color 160ms ease-in-out;
+  background-color: var(--add-button-color);
+  transition: background-color var(--transition);
 }
 
 .button-add:hover {
-  background-color: #99ff99;
+  background-color: var(--add-button-hover-color);
 }
