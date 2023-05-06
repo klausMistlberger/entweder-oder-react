@@ -9,7 +9,7 @@ const App = () => {
     { id: nanoid(), value: '', placeholder: 'Entweder...' },
     { id: nanoid(), value: '', placeholder: '...Oder' },
   ];
-  const initialOutput = '>> ••• <<';
+  const initialOutput = '•••';
 
   const [options, setOptions] = useState(initialOptions);
   const [output, setOutput] = useState(initialOutput);
@@ -100,7 +100,7 @@ const App = () => {
       if (options[select].value !== '') {
         return options[select].value;
       }
-      return '>> ••• <<';
+      return initialOutput;
     });
   };
 

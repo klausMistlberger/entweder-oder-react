@@ -1,11 +1,12 @@
 :root {
   color-scheme: light dark;
+  --font-family: Tahoma, Helvetica, sans-serif;
   --transition: 160ms ease-in-out;
   --background: #000d15;
   --shadow-color: #001420;
   --text-color: #65747b;
   --text-color-dark: #072030;
-  --input-color: #0d2635;
+  --input-color: #051b29;
   --input-focus-color: #1a313f;
   --result-button-color: #024c42;
   --result-button-hover-color: #017365;
@@ -24,7 +25,7 @@
 }
 
 body {
-  font-family: Tahoma, Helvetica, sans-serif;
+  font-family: var(--font-family);
   margin: 0;
   padding: 0;
   background-color: var(--background);
