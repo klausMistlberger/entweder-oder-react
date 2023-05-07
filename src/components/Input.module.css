@@ -24,3 +24,7 @@
   background-color: var(--input-focus-color);
   box-shadow: 3px 3px 4px var(--input-focus-color);
 }
+
+::placeholder {
+  color: var(--input-placeholder-color);
+}

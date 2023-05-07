@@ -62,6 +62,7 @@ form {
   margin-bottom: 1em;
   font-size: 2em;
   font-weight: 700;
+  text-align: center;
   color: var(--text-color);
   position: relative;
 }
@@ -88,6 +89,7 @@ button {
   justify-content: center;
   align-items: center;
   transition: background-color var(--transition);
+  z-index: 9;
 }
 
 .utility-button {

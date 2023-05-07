@@ -4,9 +4,10 @@
   --transition: 160ms ease-in-out;
   --background: #000d15;
   --shadow-color: #001420;
-  --text-color: #65747b;
+  --text-color: #eeeeee;
   --text-color-dark: #072030;
   --input-color: #051b29;
+  --input-placeholder-color: #dddddd69;
   --input-focus-color: #1a313f;
   --result-button-color: #024c42;
   --result-button-hover-color: #017365;
