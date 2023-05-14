@@ -15,16 +15,15 @@ const App = () => {
 
   const [options, setOptions] = useState(initialOptions);
   const [output, setOutput] = useState(initialOutput);
-  const [darkMode, setDarkMode] = useState(true);
+  const [darkMode, setDarkMode] = useState(
+    localStorage.getItem('darkMode') ?? true
+  );
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem('darkMode');
-    if (savedTheme) setDarkMode(savedTheme);
     getQueryParams();
   }, []);
 
   useEffect(() => {
-    console.log('darkMode: ', darkMode);
     darkMode
       ? document.body.classList.add('dark-mode')
       : document.body.classList.remove('dark-mode');

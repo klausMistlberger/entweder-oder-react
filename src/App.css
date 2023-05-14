@@ -69,7 +69,6 @@ form {
 }
 
 .result-button:hover {
-  color: var(--text-color-dark);
   background-color: var(--result-button-hover-color);
 }
 
