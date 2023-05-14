@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import Input from './components/Input';
-import AddOptionButton from './components/ButtonAdd';
-import { nanoid } from 'nanoid';
 import './App.css';
+import '@theme-toggles/react/css/Expand.css';
+import { Expand } from '@theme-toggles/react';
+import { nanoid } from 'nanoid';
+import AddOptionButton from './components/ButtonAdd';
+import Input from './components/Input';
 
 const App = () => {
   const initialOptions = [
@@ -13,10 +15,21 @@ const App = () => {
 
   const [options, setOptions] = useState(initialOptions);
   const [output, setOutput] = useState(initialOutput);
+  const [darkMode, setDarkMode] = useState(true);
 
   useEffect(() => {
+    const savedTheme = localStorage.getItem('darkMode');
+    if (savedTheme) setDarkMode(savedTheme);
     getQueryParams();
   }, []);
+
+  useEffect(() => {
+    console.log('darkMode: ', darkMode);
+    darkMode
+      ? document.body.classList.add('dark-mode')
+      : document.body.classList.remove('dark-mode');
+    localStorage.setItem('darkMode', darkMode);
+  }, [darkMode]);
 
   const newOption = { id: nanoid(), value: '', placeholder: '...' };
   const createOption = (option) => {
@@ -27,9 +40,7 @@ const App = () => {
     const elementToUpdate = options.find(
       (option) => option.id === event.target.id
     );
-
     elementToUpdate.value = event.target.value;
-
     const changeIndex = options.findIndex(
       (element) => element === elementToUpdate
     );
@@ -140,7 +151,16 @@ const App = () => {
 
   return (
     <div className="App">
-      <h1>Entweder - Oder - X</h1>
+      <header>
+        <h1>Entweder - Oder - X</h1>
+
+        <Expand
+          duration={750}
+          className="theme-toggle"
+          toggled={darkMode}
+          toggle={setDarkMode}
+        />
+      </header>
       <form className="form">
         {inputs}
         <AddOptionButton onClick={addOption} />

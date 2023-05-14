@@ -2,13 +2,24 @@
   color-scheme: light dark;
   --font-family: Tahoma, Helvetica, sans-serif;
   --transition: 160ms ease-in-out;
-  --background: #000d15;
-  --shadow-color: #001420;
+
+  --background: #eee;
+  --text-color: #111d15;
+  --text-color-dark: #072030;
+  --input-color: #fff;
+  --input-placeholder-color: #696969;
+  --input-focus-color: #fff;
+
+  /* --background: #000d15;
   --text-color: #eeeeee;
+  --shadow-color: #001420;
   --text-color-dark: #072030;
   --input-color: #051b29;
   --input-placeholder-color: #dddddd69;
-  --input-focus-color: #1a313f;
+  --input-focus-color: #1a313f; */
+
+  --shadow-color: #001420;
+  --text-color-button: #eeeeee;
   --result-button-color: #024c42;
   --result-button-hover-color: #017365;
   --reset-button-color: #4c0b17;
@@ -35,4 +46,13 @@ body {
 
 .shadow {
   box-shadow: 2px 2px 4px var(--shadow-color);
+}
+
+.dark-mode {
+  --background: #000d15;
+  --text-color: #eeeeee;
+  --text-color-dark: #072030;
+  --input-color: #051b29;
+  --input-placeholder-color: #dddddd69;
+  --input-focus-color: #1a313f;
 }
