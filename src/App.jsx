@@ -15,19 +15,25 @@ const App = () => {
 
   const [options, setOptions] = useState(initialOptions);
   const [output, setOutput] = useState(initialOutput);
-  const [darkMode, setDarkMode] = useState(
-    localStorage.getItem('darkMode') ?? true
-  );
+
+  const getInitialDarkMode = () => {
+    const savedDarkMode = localStorage.getItem('darkMode');
+    return savedDarkMode !== null ? JSON.parse(savedDarkMode) : true;
+  };
+
+  const [darkMode, setDarkMode] = useState(getInitialDarkMode);
 
   useEffect(() => {
     getQueryParams();
+    const savedDarkMode = JSON.parse(localStorage.getItem('darkMode'));
+    if (savedDarkMode !== null) setDarkMode(savedDarkMode);
   }, []);
 
   useEffect(() => {
+    localStorage.setItem('darkMode', JSON.stringify(darkMode));
     darkMode
       ? document.body.classList.add('dark-mode')
       : document.body.classList.remove('dark-mode');
-    localStorage.setItem('darkMode', darkMode);
   }, [darkMode]);
 
   const newOption = { id: nanoid(), value: '', placeholder: '...' };
@@ -151,8 +157,6 @@ const App = () => {
   return (
     <div className="App">
       <header>
-        <h1>Entweder - Oder - X</h1>
-
         <Expand
           duration={750}
           className="theme-toggle"
@@ -160,6 +164,8 @@ const App = () => {
           toggle={setDarkMode}
         />
       </header>
+      <h1>Entweder - Oder - X</h1>
+
       <form className="form">
         {inputs}
         <AddOptionButton onClick={addOption} />
