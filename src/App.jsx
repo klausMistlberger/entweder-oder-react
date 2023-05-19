@@ -133,12 +133,17 @@ const App = () => {
       text: 'https://eo.klausmistlberger.rocks/',
       url: 'https://eo.klausmistlberger.rocks/',
     };
-    if (options[0].value !== '' && options[1].value !== '') {
-      shareData.text = createQueryUrl();
-      shareData.url = createQueryUrl();
-      navigator.share(shareData);
-    } else {
-      navigator.share(shareData);
+
+    try {
+      if (options[0].value !== '' && options[1].value !== '') {
+        shareData.text = createQueryUrl();
+        shareData.url = createQueryUrl();
+        navigator.share(shareData);
+      } else {
+        navigator.share(shareData);
+      }
+    } catch (error) {
+      alert('Sharing not supported');
     }
   };
 
