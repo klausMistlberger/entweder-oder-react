@@ -27,8 +27,8 @@
   --reset-button-hover-color: #c91d3c;
   --share-button-color: #751bb1;
   --share-button-hover-color: #9221de;
-  --add-button-color: #856062;
-  --add-button-hover-color: #9f7a7c;
+  --add-button-color: #50e150;
+  --add-button-hover-color: #6ef16e;
   --remove-button-color: #9c162f;
   --remove-button-hover-color: #c91d3c;
 }
@@ -63,8 +63,8 @@ body {
   --reset-button-hover-color: #540d1a;
   --share-button-color: #47106b;
   --share-button-hover-color: #571f7d;
-  --add-button-color: #513b3c;
-  --add-button-hover-color: #655356;
+  --add-button-color: #268826;
+  --add-button-hover-color: #359b35;
   --remove-button-color: #4c0b17;
   --remove-button-hover-color: #540d1a;
 }
