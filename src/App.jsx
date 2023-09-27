@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import './App.css';
 import '@theme-toggles/react/css/Expand.css';
 import { Expand } from '@theme-toggles/react';
@@ -16,6 +16,16 @@ const App = () => {
   const [options, setOptions] = useState(initialOptions);
   const [output, setOutput] = useState(initialOutput);
 
+  const getQueryParams = useCallback(() => {
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const params = Object.fromEntries(urlSearchParams.entries());
+    const values = Object.values(params);
+    if (values.length >= 2) {
+      const queryOptions = values.map((value) => createOption(value));
+      setOptions(queryOptions);
+    }
+  }, []);
+
   const getInitialDarkMode = () => {
     const savedDarkMode = localStorage.getItem('darkMode');
     return savedDarkMode !== null ? JSON.parse(savedDarkMode) : true;
@@ -27,7 +37,7 @@ const App = () => {
     getQueryParams();
     const savedDarkMode = JSON.parse(localStorage.getItem('darkMode'));
     if (savedDarkMode !== null) setDarkMode(savedDarkMode);
-  }, []);
+  }, [getQueryParams]);
 
   useEffect(() => {
     localStorage.setItem('darkMode', JSON.stringify(darkMode));
@@ -71,16 +81,6 @@ const App = () => {
       newValues.splice(deleteIndex, 1);
       return newValues;
     });
-  };
-
-  const getQueryParams = () => {
-    const urlSearchParams = new URLSearchParams(window.location.search);
-    const params = Object.fromEntries(urlSearchParams.entries());
-    const values = Object.values(params);
-    if (values.length >= 2) {
-      const queryOptions = values.map((value) => createOption(value));
-      setOptions(queryOptions);
-    }
   };
 
   const createQueryUrl = () => {
