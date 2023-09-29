@@ -4,7 +4,14 @@
   "start_url": ".",
   "display": "standalone",
   "description": "The one and only Entweder-Oder Generator",
+  "background_color": "#000d15",
+  "theme_color": "#290887",
   "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64",
+      "type": "image/x-icon"
+    },
     {
       "src": "icons/512.png",
       "type": "image/png",
@@ -14,6 +21,11 @@
       "src": "icons/256.png",
       "type": "image/png",
       "sizes": "256x256"
+    },
+    {
+      "src": "icons/192.png",
+      "type": "image/png",
+      "sizes": "192x192"
     },
     {
       "src": "icons/128.png",

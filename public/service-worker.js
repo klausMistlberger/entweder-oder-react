@@ -1,59 +1,79 @@
 /* eslint-disable no-restricted-globals */
 
+// Update version when there are changes
+const CACHE_VERSION = 'v1.0'; 
 const CACHE_NAME = 'eox-cache';
-const CACHE_VERSION = 'v1.0'; // Update version when there are changes
+const CACHE = `${CACHE_NAME}-${CACHE_VERSION}`;
 
-// Files to cache
 const FILES_TO_CACHE = [
   '/',
-  '/index.html',
   '/favicon.ico',
   '/icons/32.png',
   '/icons/64.png',
   '/icons/128.png',
+  '/icons/192.png',
   '/icons/256.png',
   '/icons/512.png',
-]; // Add other URLs to cache for offline access
+];
 
-// Install event
 self.addEventListener('install', (event) => {
+  console.log('Service worker installed');
   event.waitUntil(
-    caches.open(`${CACHE_NAME}-${CACHE_VERSION}`).then((cache) => {
-      console.log('cached file loaded');
-      return cache.addAll(FILES_TO_CACHE);
+    caches.open(CACHE).then((cache) => {
+      cache.addAll(FILES_TO_CACHE);
     })
   );
 });
 
-// Activate event
 self.addEventListener('activate', (event) => {
+  console.log('Service worker activated');
   event.waitUntil(
     caches.keys().then((cacheNames) => {
-      const oldCacheNames = cacheNames.filter(
-        (cacheName) =>
-          cacheName.startsWith(CACHE_NAME) &&
-          cacheName !== `${CACHE_NAME}-${CACHE_VERSION}`
-      );
-      return Promise.all(oldCacheNames.map(caches.delete.bind(caches)));
+      const oldCaches = [];
+      cacheNames.forEach((cache) => {
+        if (cache !== CACHE) oldCaches.push(cache);
+      });
+      caches.delete(oldCaches);
     })
   );
 });
 
-// Fetch event
-self.addEventListener('fetch', (event) => {
-  if (event.request.method === 'GET') {
-    event.respondWith(
-      caches.match(event.request).then((cachedResponse) => {
-        if (cachedResponse) {
-          return cachedResponse;
-        }
-        return fetch(event.request).then((response) => {
-          return caches.open(`${CACHE_NAME}-${CACHE_VERSION}`).then((cache) => {
-            cache.put(event.request, response.clone());
-            return response;
-          });
-        });
-      })
-    );
-  }
-});
+// self.addEventListener('fetch', (event) => {
+//   console.log(event);
+//   return;
+// });
+
+
+
+// // Activate event
+// self.addEventListener('activate', (event) => {
+//   event.waitUntil(
+//     caches.keys().then((cacheNames) => {
+//       const oldCacheNames = cacheNames.filter(
+//         (cacheName) =>
+//           cacheName.startsWith(CACHE_NAME) &&
+//           cacheName !== `${CACHE_NAME}-${CACHE_VERSION}`
+//       );
+//       return Promise.all(oldCacheNames.map(caches.delete.bind(caches)));
+//     })
+//   );
+// });
+
+// // Fetch event
+// self.addEventListener('fetch', (event) => {
+//   if (event.request.method === 'GET') {
+//     event.respondWith(
+//       caches.match(event.request).then((cachedResponse) => {
+//         if (cachedResponse) {
+//           return cachedResponse;
+//         }
+//         return fetch(event.request).then((response) => {
+//           return caches.open(`${CACHE_NAME}-${CACHE_VERSION}`).then((cache) => {
+//             cache.put(event.request, response.clone());
+//             return response;
+//           });
+//         });
+//       })
+//     );
+//   }
+// });
