@@ -29,16 +29,12 @@ self.addEventListener('install', (event) => {
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames.map((cacheName) => {
-          if (
-            cacheName.startsWith(CACHE_NAME) &&
-            cacheName !== `${CACHE_NAME}-${CACHE_VERSION}`
-          ) {
-            return caches.delete(cacheName);
-          }
-        })
+      const oldCacheNames = cacheNames.filter(
+        (cacheName) =>
+          cacheName.startsWith(CACHE_NAME) &&
+          cacheName !== `${CACHE_NAME}-${CACHE_VERSION}`
       );
+      return Promise.all(oldCacheNames.map(caches.delete.bind(caches)));
     })
   );
 });

@@ -8,8 +8,8 @@ import Input from './components/Input';
 
 const App = () => {
   const initialOptions = [
-    { id: nanoid(), value: '', placeholder: 'Entweder...' },
-    { id: nanoid(), value: '', placeholder: '...Oder' },
+    { id: nanoid(), value: '', placeholder: 'Either ...' },
+    { id: nanoid(), value: '', placeholder: '... Or' },
   ];
   const initialOutput = '•••';
 
@@ -169,7 +169,7 @@ const App = () => {
           toggle={setDarkMode}
         />
       </header>
-      <h1>Entweder - Oder - X</h1>
+      <h1>E O X</h1>
 
       <form className="form">
         {inputs}
