@@ -34,7 +34,7 @@ body {
   margin: 0;
   padding: 0;
   background-color: var(--background);
-  height: 100dvh;
+  /* height: 100dvh; */
 }
 
 .shadow {

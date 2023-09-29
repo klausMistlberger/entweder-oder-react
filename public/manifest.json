@@ -1,6 +1,7 @@
 {
-  "name": "EOX",
-  "start_url": "./index.html",
+  "name": "Entweder - Oder - X",
+  "short_name": "EOX",
+  "start_url": ".",
   "display": "standalone",
   "description": "The one and only Entweder-Oder Generator",
   "icons": [
