@@ -8,8 +8,8 @@ import Input from './components/Input';
 
 const App = () => {
   const initialOptions = [
-    { id: nanoid(), value: '', placeholder: 'Either ...' },
-    { id: nanoid(), value: '', placeholder: '... Or' },
+    { id: nanoid(), value: '', placeholder: '•••' },
+    { id: nanoid(), value: '', placeholder: '•••' },
   ];
   const initialOutput = '•••';
 
@@ -46,9 +46,9 @@ const App = () => {
       : document.body.classList.remove('dark-mode');
   }, [darkMode]);
 
-  const newOption = { id: nanoid(), value: '', placeholder: '...' };
+  const newOption = { id: nanoid(), value: '', placeholder: '•••' };
   const createOption = (option) => {
-    return { id: nanoid(), value: option, placeholder: '...' };
+    return newOption;
   };
 
   const optionChangeHandler = (event) => {

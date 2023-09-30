@@ -6,7 +6,7 @@ const CACHE_NAME = 'eox-cache';
 const CACHE = `${CACHE_NAME}-${CACHE_VERSION}`;
 
 const FILES_TO_CACHE = [
-  '/',
+  '/index.html',
   '/favicon.ico',
   '/icons/32.png',
   '/icons/64.png',
@@ -16,48 +16,43 @@ const FILES_TO_CACHE = [
   '/icons/512.png',
 ];
 
-self.addEventListener('install', (event) => {
+self.addEventListener('install', async (event) => {
   console.log('Service worker installed');
-  event.waitUntil(
-    caches.open(CACHE).then((cache) => {
-      cache.addAll(FILES_TO_CACHE);
-    })
-  );
+  const cache = await caches.open(CACHE);
+  try {
+    await cache.addAll(FILES_TO_CACHE);
+  } catch (error) {
+    console.error('Error adding file to cache: ', error);
+  }
 });
 
-self.addEventListener('activate', (event) => {
+self.addEventListener('activate', async (event) => {
   console.log('Service worker activated');
-  event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      const oldCaches = [];
-      cacheNames.forEach((cache) => {
-        if (cache !== CACHE) oldCaches.push(cache);
-      });
-      caches.delete(oldCaches);
-    })
-  );
+  const cacheNames = await caches.keys();
+  const oldCaches = [];
+  cacheNames.forEach((cache) => {
+    if (cache !== CACHE) oldCaches.push(cache);
+  });
+  try {
+    await caches.delete(oldCaches);
+  } catch (error) {
+    console.error('Error deleting old cache: ', error);
+  }
 });
-
-// self.addEventListener('fetch', (event) => {
-//   console.log(event);
-//   return;
-// });
 
 // Fetch event
-self.addEventListener('fetch', (event) => {
+self.addEventListener('fetch', async (event) => {
   if (event.request.method === 'GET') {
-    event.respondWith(
-      caches.match(event.request).then((cachedResponse) => {
-        if (cachedResponse) {
-          return cachedResponse;
-        }
-        return fetch(event.request).then((response) => {
-          return caches.open(`${CACHE_NAME}-${CACHE_VERSION}`).then((cache) => {
-            cache.put(event.request, response.clone());
-            return response;
-          });
-        });
-      })
-    );
+    const cachedResponse = await caches.match(event.request);
+    if (cachedResponse) return cachedResponse;
+
+    try {
+      const fetchResponse = await fetch(event.request);
+      const cache = await caches.open(CACHE);
+      await cache.put(event.request, fetchResponse.clone());
+      return fetchResponse;
+    } catch (error) {
+      console.error('Error fetching data: ', error);
+    }
   }
 });

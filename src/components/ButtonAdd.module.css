@@ -2,7 +2,7 @@
   align-self: center;
   width: 3em;
   height: 3em;
-  border: none;
+  border: 1px solid var(--add-button-hover-color);
   border-radius: 50%;
   font-weight: 700;
   background-color: var(--add-button-color);
