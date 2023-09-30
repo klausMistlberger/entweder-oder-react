@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-globals */
 
 // Update version when there are changes
-const CACHE_VERSION = 'v1.0'; 
+const CACHE_VERSION = 'v1.0';
 const CACHE_NAME = 'eox-cache';
 const CACHE = `${CACHE_NAME}-${CACHE_VERSION}`;
 
@@ -43,37 +43,21 @@ self.addEventListener('activate', (event) => {
 //   return;
 // });
 
-
-
-// // Activate event
-// self.addEventListener('activate', (event) => {
-//   event.waitUntil(
-//     caches.keys().then((cacheNames) => {
-//       const oldCacheNames = cacheNames.filter(
-//         (cacheName) =>
-//           cacheName.startsWith(CACHE_NAME) &&
-//           cacheName !== `${CACHE_NAME}-${CACHE_VERSION}`
-//       );
-//       return Promise.all(oldCacheNames.map(caches.delete.bind(caches)));
-//     })
-//   );
-// });
-
-// // Fetch event
-// self.addEventListener('fetch', (event) => {
-//   if (event.request.method === 'GET') {
-//     event.respondWith(
-//       caches.match(event.request).then((cachedResponse) => {
-//         if (cachedResponse) {
-//           return cachedResponse;
-//         }
-//         return fetch(event.request).then((response) => {
-//           return caches.open(`${CACHE_NAME}-${CACHE_VERSION}`).then((cache) => {
-//             cache.put(event.request, response.clone());
-//             return response;
-//           });
-//         });
-//       })
-//     );
-//   }
-// });
+// Fetch event
+self.addEventListener('fetch', (event) => {
+  if (event.request.method === 'GET') {
+    event.respondWith(
+      caches.match(event.request).then((cachedResponse) => {
+        if (cachedResponse) {
+          return cachedResponse;
+        }
+        return fetch(event.request).then((response) => {
+          return caches.open(`${CACHE_NAME}-${CACHE_VERSION}`).then((cache) => {
+            cache.put(event.request, response.clone());
+            return response;
+          });
+        });
+      })
+    );
+  }
+});

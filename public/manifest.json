@@ -1,7 +1,7 @@
 {
   "name": "EOX",
   "short_name": "EOX",
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
   "description": "The one and only Entweder-Oder Generator",
   "background_color": "#000d15",
