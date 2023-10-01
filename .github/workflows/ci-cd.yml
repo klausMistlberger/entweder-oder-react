@@ -36,7 +36,7 @@ jobs:
           username: ${{vars.SERVER_USER}}
           password: ${{ secrets.SERVER_FTP_PASS }}
           local-dir: ./build/
-          server-dir: /eoxpwa/
+          server-dir: eoxpwa/
           dry-run: false
           log-level: verbose
 
