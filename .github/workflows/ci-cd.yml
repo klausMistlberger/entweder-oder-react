@@ -18,8 +18,10 @@ jobs:
         # See supported Node.js release schedule 
         # at https://nodejs.org/en/about/releases/
     steps:
-    - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/checkout@v3
+    
+    - name: Install & build  
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
@@ -27,7 +29,28 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
 
-    - uses: actions/upload-artifact@v3
+    # - name: upload artifact
+    #   uses: actions/upload-artifact@v3
+    #   with:
+    #     name: eox
+    #     path: ./build/
+    
+    - name: deploy via ftp
+      uses: SamKirkland/web-deploy@v1
       with:
-        name: eox
-        path: ./build/
+        target-server: ${{ vars.SERVER_HOSTNAME }}
+        ssh-port: ${{ vars.SERVER_PORT }}
+        remote-user: ${{ vars.SERVER_USER }}
+        private-ssh-key: ${{ secrets.SERVER_SSH_PASS }}
+        source-path: ./build/
+        destination-path: ~/eoxpwa/
+        rsync-options: --dry-run --verbose --human-readable
+
+  # deploy:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+
+  #     - uses: actions/download-artifact@v3
+  #       with:
+  #         name: eox
