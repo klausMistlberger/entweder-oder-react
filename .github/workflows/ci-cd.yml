@@ -30,8 +30,8 @@ jobs:
       - name: deploy via ftp-deploy-action
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          server: ${{ vars.SERVER_HOSTNAME}}
-          username: ${{vars.SERVER_USER}}
+          server: ${{ secrets.SERVER_HOSTNAME}}
+          username: ${{ secrets.SERVER_USER }}
           password: ${{ secrets.SERVER_FTP_PASS }}
           local-dir: ./build/
           server-dir: eoxpwa/
