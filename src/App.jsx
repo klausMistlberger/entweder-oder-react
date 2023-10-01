@@ -125,9 +125,9 @@ const App = () => {
 
   const clickShareHandler = () => {
     let shareData = {
-      title: 'Entweder - Oder - X',
-      text: 'https://eo.klausmistlberger.rocks/',
-      url: 'https://eo.klausmistlberger.rocks/',
+      title: 'Decide For Me',
+      text: 'https://decideforme.net/',
+      url: 'https://decideforme.net/',
     };
 
     try {
@@ -165,7 +165,7 @@ const App = () => {
           toggle={setDarkMode}
         />
       </header>
-      <h1>E O X</h1>
+      <h1>Decide for Me</h1>
 
       <form className="form">
         {inputs}

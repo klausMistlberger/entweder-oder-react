@@ -1,9 +1,9 @@
 {
-  "name": "EOX",
-  "short_name": "EOX",
+  "name": "Decide for Me",
+  "short_name": "DFM",
   "start_url": "/",
   "display": "standalone",
-  "description": "The one and only Entweder-Oder Generator",
+  "description": "The only decision-making tool you'll ever need",
   "background_color": "#000d15",
   "theme_color": "#000d15",
   "icons": [
