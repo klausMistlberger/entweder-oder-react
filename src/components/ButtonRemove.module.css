@@ -3,7 +3,7 @@
   height: 2em;
   font-weight: 700;
   background-color: var(--remove-button-color);
-  border: none;
+  border: 1px solid var(--remove-button-hover-color);
   border-radius: 50%;
   transition: background-color var(--transition);
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import './App.css';
 import '@theme-toggles/react/css/Expand.css';
 import { Expand } from '@theme-toggles/react';
@@ -8,13 +8,27 @@ import Input from './components/Input';
 
 const App = () => {
   const initialOptions = [
-    { id: nanoid(), value: '', placeholder: 'Entweder...' },
-    { id: nanoid(), value: '', placeholder: '...Oder' },
+    { id: nanoid(), value: '', placeholder: '•••' },
+    { id: nanoid(), value: '', placeholder: '•••' },
   ];
   const initialOutput = '•••';
 
   const [options, setOptions] = useState(initialOptions);
   const [output, setOutput] = useState(initialOutput);
+
+  const createOption = useCallback(() => {
+    return { id: nanoid(), value: '', placeholder: '•••' };
+  }, []);
+
+  const getQueryParams = useCallback(() => {
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const params = Object.fromEntries(urlSearchParams.entries());
+    const values = Object.values(params);
+    if (values.length >= 2) {
+      const queryOptions = values.map((value) => createOption(value));
+      setOptions(queryOptions);
+    }
+  }, [createOption]);
 
   const getInitialDarkMode = () => {
     const savedDarkMode = localStorage.getItem('darkMode');
@@ -27,7 +41,7 @@ const App = () => {
     getQueryParams();
     const savedDarkMode = JSON.parse(localStorage.getItem('darkMode'));
     if (savedDarkMode !== null) setDarkMode(savedDarkMode);
-  }, []);
+  }, [getQueryParams]);
 
   useEffect(() => {
     localStorage.setItem('darkMode', JSON.stringify(darkMode));
@@ -35,11 +49,6 @@ const App = () => {
       ? document.body.classList.add('dark-mode')
       : document.body.classList.remove('dark-mode');
   }, [darkMode]);
-
-  const newOption = { id: nanoid(), value: '', placeholder: '...' };
-  const createOption = (option) => {
-    return { id: nanoid(), value: option, placeholder: '...' };
-  };
 
   const optionChangeHandler = (event) => {
     const elementToUpdate = options.find(
@@ -57,13 +66,11 @@ const App = () => {
     });
   };
 
-  const addOption = (event) => {
-    event.preventDefault();
-    setOptions((prevOptions) => [...prevOptions, newOption]);
+  const addOption = () => {
+    setOptions((prevOptions) => [...prevOptions, createOption()]);
   };
 
   const removeOption = (event) => {
-    event.preventDefault();
     const id = event.target.getAttribute('data-id');
     const deleteIndex = options.findIndex((element) => element.id === id);
     setOptions((prevValues) => {
@@ -71,16 +78,6 @@ const App = () => {
       newValues.splice(deleteIndex, 1);
       return newValues;
     });
-  };
-
-  const getQueryParams = () => {
-    const urlSearchParams = new URLSearchParams(window.location.search);
-    const params = Object.fromEntries(urlSearchParams.entries());
-    const values = Object.values(params);
-    if (values.length >= 2) {
-      const queryOptions = values.map((value) => createOption(value));
-      setOptions(queryOptions);
-    }
   };
 
   const createQueryUrl = () => {
@@ -100,8 +97,7 @@ const App = () => {
     }
   };
 
-  const clickGoHandler = (event) => {
-    event.preventDefault();
+  const clickGoHandler = () => {
     const factor = 30;
     const seedLength = options.length * factor + 1;
 
@@ -169,12 +165,16 @@ const App = () => {
           toggle={setDarkMode}
         />
       </header>
-      <h1>Entweder - Oder - X</h1>
+      <h1>E O X</h1>
 
       <form className="form">
         {inputs}
         <AddOptionButton onClick={addOption} />
-        <button className="result-button shadow" onClick={clickGoHandler}>
+        <button
+          type="button"
+          className="result-button shadow"
+          onClick={clickGoHandler}
+        >
           GO
         </button>
       </form>
@@ -182,12 +182,14 @@ const App = () => {
 
       <div className="utility-button-container">
         <button
+          type="button"
           className="utility-button reset-button shadow"
           onClick={clickResetHandler}
         >
           Reset
         </button>
         <button
+          type="button"
           className="utility-button share-button shadow"
           onClick={clickShareHandler}
         >

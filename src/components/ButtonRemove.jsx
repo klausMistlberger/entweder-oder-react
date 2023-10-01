@@ -4,6 +4,7 @@ import classes from './ButtonRemove.module.css';
 const ButtonRemove = (props) => {
   return (
     <button
+      type="button"
       title="remove option"
       onClick={props.onRemove}
       data-id={props.id}

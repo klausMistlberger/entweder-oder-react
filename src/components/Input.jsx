@@ -6,7 +6,7 @@ const Input = (props) => {
   return (
     <div className={classes['input-container']}>
       <input
-        type="input"
+        type="text"
         className={`${classes.input} shadow`}
         placeholder={props.placeholder}
         id={props.id}

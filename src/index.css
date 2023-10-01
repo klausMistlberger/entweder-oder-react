@@ -10,16 +10,10 @@
   --input-placeholder-color: #696969;
   --input-focus-color: #fff;
 
-  /* --background: #000d15;
-  --text-color: #eeeeee;
-  --shadow-color: #001420;
-  --text-color-dark: #072030;
-  --input-color: #051b29;
-  --input-placeholder-color: #dddddd69;
-  --input-focus-color: #1a313f; */
-
   --shadow-color: #001420;
   --text-color-button: #eeeeee;
+
+  --button-active-color: #20f8db;
 
   --result-button-color: #04c8ae;
   --result-button-hover-color: #05fad9;
@@ -56,6 +50,8 @@ body {
   --input-color: #051b29;
   --input-placeholder-color: #dddddd69;
   --input-focus-color: #1a313f;
+
+  --button-active-color: #078879;
 
   --result-button-color: #024c42;
   --result-button-hover-color: #017365;
