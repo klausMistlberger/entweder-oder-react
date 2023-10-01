@@ -5,9 +5,9 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "feature/pwa" ]
+    branches: ['feature/pwa']
   pull_request:
-    branches: [ "feature/pwa" ]
+    branches: ['feature/pwa']
 
 jobs:
   build:
@@ -15,39 +15,37 @@ jobs:
     strategy:
       matrix:
         node-version: [18.x]
-        # See supported Node.js release schedule 
+        # See supported Node.js release schedule
         # at https://nodejs.org/en/about/releases/
     steps:
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/checkout@v3
-    
-    - name: Install & build  
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm ci
-    - run: npm run build --if-present
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/checkout@v3
 
-    - name: deploy via web-deploy
-      uses: SamKirkland/web-deploy@v1
-      with:
-        target-server: ${{ vars.SERVER_HOSTNAME }}
-        ssh-port: ${{ vars.SERVER_PORT }}
-        remote-user: ${{ vars.SERVER_USER }}
-        private-ssh-key: ${{ secrets.SERVER_SSH_PASS }}
-        source-path: ./build/
-        destination-path: ~/html/eoxpwa/
-        rsync-options: --dry-run --verbose --human-readable --stats
+      - name: Install & build
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run build --if-present
 
-
+      - name: deploy via ftp-deploy-action
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ vars.SERVER_HOSTNAME}}
+          username: ${{vars.SERVER_USER}}
+          password: ${{ secrets.SERVER_FTP_PASS }}
+          local-dir: ./build/
+          server-dir: ~/html/eoxpwa
+          dry-run: true
+          log-level: standard
+          # rsync-options: --dry-run --verbose --human-readable --stats
 
     # - name: upload artifact
     #   uses: actions/upload-artifact@v3
     #   with:
     #     name: eox
     #     path: ./build/
-
 
   # deploy:
   #   runs-on: ubuntu-latest
