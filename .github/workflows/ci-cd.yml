@@ -36,9 +36,9 @@ jobs:
           username: ${{vars.SERVER_USER}}
           password: ${{ secrets.SERVER_FTP_PASS }}
           local-dir: ./build/
-          server-dir: ~/html/eoxpwa
+          server-dir: ~/html/eoxpwa/
           dry-run: true
-          log-level: standard
+          log-level: verbose
           # rsync-options: --dry-run --verbose --human-readable --stats
 
     # - name: upload artifact
