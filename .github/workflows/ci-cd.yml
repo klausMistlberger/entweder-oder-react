@@ -5,9 +5,7 @@ name: Node.js CI
 
 on:
   push:
-    branches: ['feature/pwa']
-  pull_request:
-    branches: ['feature/pwa']
+    branches: ['main']
 
 jobs:
   build:
@@ -38,19 +36,4 @@ jobs:
           local-dir: ./build/
           server-dir: eoxpwa/
           dry-run: false
-          log-level: verbose
-
-    # - name: upload artifact
-    #   uses: actions/upload-artifact@v3
-    #   with:
-    #     name: eox
-    #     path: ./build/
-
-  # deploy:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v3
-
-  #     - uses: actions/download-artifact@v3
-  #       with:
-  #         name: eox
+          log-level: minimal
