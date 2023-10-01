@@ -38,7 +38,7 @@ jobs:
         private-ssh-key: ${{ secrets.SERVER_SSH_PASS }}
         source-path: ./build/
         destination-path: ~/html/eoxpwa/
-        rsync-options: --dry-run --verbose --human-readable
+        rsync-options: --dry-run --verbose --human-readable --stats
 
 
 
