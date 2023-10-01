@@ -21,7 +21,7 @@ jobs:
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/checkout@v3
 
-      - name: Install & build
+      - name: install & build
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
@@ -37,9 +37,8 @@ jobs:
           password: ${{ secrets.SERVER_FTP_PASS }}
           local-dir: ./build/
           server-dir: /html/eoxpwa/
-          dry-run: true
+          dry-run: false
           log-level: verbose
-          # rsync-options: --dry-run --verbose --human-readable --stats
 
     # - name: upload artifact
     #   uses: actions/upload-artifact@v3
