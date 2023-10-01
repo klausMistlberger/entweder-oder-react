@@ -35,7 +35,9 @@ self.addEventListener('activate', async (event) => {
   });
   if (oldCaches.length > 0) {
     try {
-      return await caches.delete(oldCaches);
+      for (const oldCache of oldCaches) {
+        await caches.delete(oldCache);
+      }
     } catch (error) {
       console.error('Error deleting old cache: ', error);
     }
