@@ -29,13 +29,7 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
 
-    # - name: upload artifact
-    #   uses: actions/upload-artifact@v3
-    #   with:
-    #     name: eox
-    #     path: ./build/
-    
-    - name: deploy via ftp
+    - name: deploy via web-deploy
       uses: SamKirkland/web-deploy@v1
       with:
         target-server: ${{ vars.SERVER_HOSTNAME }}
@@ -43,8 +37,17 @@ jobs:
         remote-user: ${{ vars.SERVER_USER }}
         private-ssh-key: ${{ secrets.SERVER_SSH_PASS }}
         source-path: ./build/
-        destination-path: ~/eoxpwa/
+        destination-path: ~/html/eoxpwa/
         rsync-options: --dry-run --verbose --human-readable
+
+
+
+    # - name: upload artifact
+    #   uses: actions/upload-artifact@v3
+    #   with:
+    #     name: eox
+    #     path: ./build/
+
 
   # deploy:
   #   runs-on: ubuntu-latest
