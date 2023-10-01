@@ -1,10 +1,10 @@
 {
-  "name": "entweder-oder-x",
-  "homepage": "https://eo.klausmistlberger.rocks",
+  "name": "decide-for-me",
+  "homepage": "https://decideforme.net",
   "author": {
     "name": "Klaus Mistlberger"
   },
-  "version": "2.1.0",
+  "version": "2.2.0",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",

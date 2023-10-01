@@ -2,7 +2,7 @@
 
 // Update version when there are changes
 const CACHE_VERSION = 'v1.0';
-const CACHE_NAME = 'eox-cache';
+const CACHE_NAME = 'dfm-cache';
 const CACHE = `${CACHE_NAME}-${CACHE_VERSION}`;
 
 const FILES_TO_CACHE = [
@@ -33,26 +33,32 @@ self.addEventListener('activate', async (event) => {
   cacheNames.forEach((cache) => {
     if (cache !== CACHE) oldCaches.push(cache);
   });
-  try {
-    await caches.delete(oldCaches);
-  } catch (error) {
-    console.error('Error deleting old cache: ', error);
+  if (oldCaches.length > 0) {
+    try {
+      return await caches.delete(oldCaches);
+    } catch (error) {
+      console.error('Error deleting old cache: ', error);
+    }
   }
 });
 
 // Fetch event
-self.addEventListener('fetch', async (event) => {
-  if (event.request.method === 'GET') {
-    const cachedResponse = await caches.match(event.request);
-    if (cachedResponse) return cachedResponse;
+self.addEventListener('fetch', (event) => {
+  event.respondWith(
+    (async () => {
+      if (event.request.method === 'GET') {
+        const cachedResponse = await caches.match(event.request);
+        if (cachedResponse) return cachedResponse;
 
-    try {
-      const fetchResponse = await fetch(event.request);
-      const cache = await caches.open(CACHE);
-      await cache.put(event.request, fetchResponse.clone());
-      return fetchResponse;
-    } catch (error) {
-      console.error('Error fetching data: ', error);
-    }
-  }
+        try {
+          const fetchResponse = await fetch(event.request);
+          const cache = await caches.open(CACHE);
+          await cache.put(event.request, fetchResponse.clone());
+          return fetchResponse;
+        } catch (error) {
+          console.error('Error fetching data: ', error);
+        }
+      }
+    })()
+  );
 });
