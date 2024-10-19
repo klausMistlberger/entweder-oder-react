@@ -107,7 +107,7 @@ const App = () => {
     setQueryParams();
     setOutput(() => {
       if (select === options.length) {
-        return 'Keine Ahnung, wirf eine Münze!';
+        return 'IDK, decide for yourself! 😘';
       }
       if (options[select].value !== '') {
         return options[select].value;
