@@ -2,21 +2,46 @@ services:
   decideforme:
     build:
       target: prod
+    container_name: decideforme
     ports:
-      - 3000:3000
+      - ${APP_PORT}:${APP_PORT}
     restart: always
     networks:
       - app-network
 
   proxy:
     image: nginx:latest
+    container_name: nginx
     ports:
       - 80:80
+      - 443:443
     restart: always
     volumes:
-      - ./nginx/config.conf:/etc/nginx/conf.d/config.conf
+      - ./nginx/config.conf:/etc/nginx/conf.d/config.conf:ro
+      - cerbot_conf:/etc/letsencrypt:ro
+      - cerbot_www:/var/www/certbot:ro
     networks:
       - app-network
+      - cert-network
+    depends_on:
+      - decideforme
+
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - certbot_conf:/etc/letsencrypt:rw
+      - certbot_www:/var/www/certbot:rw
+    networks:
+      - cert-network
+    depends_on:
+      - nginx
+    command: certonly --webroot -w /var/www/certbot --force-renewal --email ${CERT_MAIL} -d ${APP_DOMAIN} --agree-tos --no-eff-email --dns-route53
+
+volumes:
+  certbot_conf:
+  certbot_www:
 
 networks:
   app-network:
+  cert-network:
