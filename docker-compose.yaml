@@ -11,15 +11,19 @@ services:
 
   proxy:
     image: nginx:latest
-    container_name: nginx
+    container_name: proxy
     ports:
       - 80:80
       - 443:443
     restart: always
+    environment:
+      - APP_DOMAIN=${APP_DOMAIN}
+      - APP_DOMAIN_WWW=${APP_DOMAIN_WWW}
+      - APP_PORT=${APP_PORT}
     volumes:
-      - ./nginx/config.conf:/etc/nginx/conf.d/config.conf:ro
-      - cerbot_conf:/etc/letsencrypt:ro
-      - cerbot_www:/var/www/certbot:ro
+      - ./nginx/config.conf:/etc/nginx/conf.d/config.conf
+      - certbot_conf:/etc/letsencrypt:ro
+      - certbot_www:/var/www/certbot:ro
     networks:
       - app-network
       - cert-network
@@ -32,10 +36,11 @@ services:
     volumes:
       - certbot_conf:/etc/letsencrypt:rw
       - certbot_www:/var/www/certbot:rw
+      - ./scripts/nginx-reload.sh:/etc/letsencrypt/renewal-hooks/deploy/nginx-reload.sh:ro
     networks:
       - cert-network
     depends_on:
-      - nginx
+      - proxy
     command: certonly --webroot -w /var/www/certbot --force-renewal --email ${CERT_MAIL} -d ${APP_DOMAIN} --agree-tos --no-eff-email --dns-route53
 
 volumes:
