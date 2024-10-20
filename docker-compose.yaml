@@ -16,10 +16,6 @@ services:
       - 80:80
       - 443:443
     restart: always
-    environment:
-      - APP_DOMAIN=${APP_DOMAIN}
-      - APP_DOMAIN_WWW=${APP_DOMAIN_WWW}
-      - APP_PORT=${APP_PORT}
     volumes:
       - ./nginx/config.conf:/etc/nginx/conf.d/config.conf
       - certbot_conf:/etc/letsencrypt:ro
@@ -31,15 +27,18 @@ services:
       - decideforme
 
   certbot:
-    image: certbot/certbot
+    image: certbot/dns-route53
     container_name: certbot
+    environment:
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
     volumes:
       - certbot_conf:/etc/letsencrypt:rw
       - certbot_www:/var/www/certbot:rw
       - ./scripts/nginx-reload.sh:/etc/letsencrypt/renewal-hooks/deploy/nginx-reload.sh:ro
     networks:
       - cert-network
-    command: certonly --webroot -w /var/www/certbot --force-renewal --email ${CERT_MAIL} -d ${APP_DOMAIN} --agree-tos --no-eff-email --dns-route53
+    command: certonly --dns-route53 -d ${APP_DOMAIN} -d ${APP_DOMAIN_WWW}
 
 volumes:
   certbot_conf:
