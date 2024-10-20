@@ -39,8 +39,6 @@ services:
       - ./scripts/nginx-reload.sh:/etc/letsencrypt/renewal-hooks/deploy/nginx-reload.sh:ro
     networks:
       - cert-network
-    depends_on:
-      - proxy
     command: certonly --webroot -w /var/www/certbot --force-renewal --email ${CERT_MAIL} -d ${APP_DOMAIN} --agree-tos --no-eff-email --dns-route53
 
 volumes:
