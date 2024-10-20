@@ -35,10 +35,10 @@ services:
     volumes:
       - certbot_conf:/etc/letsencrypt:rw
       - certbot_www:/var/www/certbot:rw
-      - ./scripts/nginx-reload.sh:/etc/letsencrypt/renewal-hooks/deploy/nginx-reload.sh:ro
+      - ./scripts/nginx-reload.sh:/etc/letsencrypt/renewal-hooks/post/nginx-reload.sh:ro
     networks:
       - cert-network
-    command: certonly --dns-route53 -d ${APP_DOMAIN} -d ${APP_DOMAIN_WWW} -m ${CERT_MAIL}
+    command: certonly --dns-route53 -d ${APP_DOMAIN} -d ${APP_DOMAIN_WWW} -m ${CERT_MAIL} --agree-tos --force-renewal
 
 volumes:
   certbot_conf:
