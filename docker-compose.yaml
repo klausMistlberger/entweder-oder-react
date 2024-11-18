@@ -9,7 +9,7 @@ services:
     networks:
       - app-network
     depends_on:
-      - decideforme
+      - proxy
 
   proxy:
     image: nginx:latest
