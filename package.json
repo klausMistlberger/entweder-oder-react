@@ -4,7 +4,7 @@
   "author": {
     "name": "Klaus Mistlberger"
   },
-  "version": "2.2.0",
+  "version": "2.2.1",
   "private": true,
   "dependencies": {
     "@theme-toggles/react": "^4.1.0",
