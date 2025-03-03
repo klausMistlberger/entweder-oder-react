@@ -1,6 +1,7 @@
 services:
   decideforme:
     build:
+      context: .
       target: prod
     container_name: decideforme
     ports:

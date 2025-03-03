@@ -1,7 +1,7 @@
 FROM node:lts AS deps
 WORKDIR /app
 
-COPY package*.json .
+COPY package*.json ./
 
 RUN npm ci
 
@@ -9,7 +9,7 @@ FROM node:lts AS build
 WORKDIR /app
 
 COPY --from=deps /app/node_modules ./node_modules
-COPY . .
+COPY ./ ./
 
 RUN npm run build
 
@@ -18,7 +18,7 @@ WORKDIR /app
 
 EXPOSE 3000
 
-COPY --from=build /app/build .
+COPY --from=build /app/build ./
 RUN npm i -g serve
 
 CMD ["serve", "-s", "."]
